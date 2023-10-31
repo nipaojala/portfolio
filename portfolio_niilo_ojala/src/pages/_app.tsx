@@ -1,11 +1,32 @@
 import type { AppProps } from 'next/app'
 import '@/styles/globals.css'
 import { Navbar } from '@/components/Navbar/Navbar'
+import Head from 'next/head'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <div className='p-0 m-0 w-screen h-screen relative bg-[#373e98]'
->
-  <Navbar />
-  <Component {...pageProps} />
-</div>
+  return (
+    <>
+      <Head>
+        <title>Niilo`s portfolio</title>
+        <meta name="description" content="Niilo's portfolio page" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div
+        style={{
+          padding: 0,
+          margin: 0,
+          width: '100vw',
+          maxHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+        }}
+        className="bg-blue"
+      >
+        <Navbar />
+        <Component {...pageProps} />
+      </div>
+    </>
+  )
 }
