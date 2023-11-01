@@ -19,15 +19,19 @@ export default function Home() {
       />
       <div className="m-5 text-center">
         <h1 className="scale text-red pb-5">About me</h1>
-        <p className="scale max-w-[400px] text-center text-yellow">
+        <p className="scale max-w-[400px] text-center">
           I'm 27 years old Full-Stack developer from Otaniemi. I have a half
           year of expertise from professional web development at Finnish bank
-          Osuuspankki.
+          Osuuspankki and still currently working there. I'm really passionate
+          about web development!
         </p>
         <br />
-        <p className="scale max-w-[400px] text-center text-yellow">
+        <p className="scale max-w-[400px] text-center pb-5">
           I'm studying in Aalto-university majoring Web Technologies. I'm
           planning to graduate end of summer 2024.
+        </p>
+        <p className="scale max-w-[400px] text-center text-yellow">
+          In free time i like to skateboard and play piano.
         </p>
       </div>
     </div>
