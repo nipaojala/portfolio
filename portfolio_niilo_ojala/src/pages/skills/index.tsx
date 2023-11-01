@@ -46,22 +46,18 @@ export default function Skills() {
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen">
       <div className="flex flex-col justify-center items-center w-[50vw] text-center">
-        <h1 className="scale text-red pb-3">These i have used</h1>
+        <h3 className={`scale text-red pb-3`}>These i have used</h3>
         <div className="flex flex-row pb-3">
           {renderSkills(skills.left)}
           {renderSkills(skills.right)}
         </div>
-        <p className={`scale text-[${width > 700 ? '25px' : '20px'}]`}>
-          At Osuuspankki i have learned good coding practises and keeping my
-          code reusable and clean.
+        <p className={`scale`}>
+          At Osuuspankki, I have learned how write clean and reusable code
         </p>
-        <p
-          className={`pt-3 scale text-yellow text-[${
-            width > 700 ? '25px' : '20px'
-          }]`}
-        >
-          ...and most importantly how to solve a problem!
+        <p className={`scale text-yellow pt-3 pb-3`}>
+          ...and ofcourse how to solve a problem!
         </p>
+        <p className={`scale`}>Eager to apply these skills professionally.</p>
       </div>
     </div>
   )

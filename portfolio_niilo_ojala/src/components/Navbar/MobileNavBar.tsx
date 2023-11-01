@@ -3,7 +3,7 @@ import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx'
 import { items, mapUrls } from './Navbar'
 import Link from 'next/link'
 import { useDetectClickOutside } from './useDetectClickOutside'
-
+import { motion } from 'framer-motion'
 const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   return (
     <div className="relative t-0 flex justify-center items-center align-center items-center">
@@ -30,53 +30,58 @@ export default function MobileNavbar() {
     return (
       <>
         {open && (
-          <div
-            id="menu"
+          <motion.div
+            key="menu"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
             style={{
               width: '60vw',
               height: '100vh',
-              right: '0px',
-              zIndex: '1',
+              right: 0,
+              zIndex: 1,
             }}
             className="absolute bg-blue border-l border-yellow shadow-l"
           >
             <NavbarLinks setOpen={setOpen} />
-          </div>
+          </motion.div>
         )}
       </>
     )
   }
 
-  const MobileMenuBurger = () => {
+  const MobileMenuBurger = ({ children }: { children: React.ReactNode }) => {
     return (
-      <>
-        {!open ? (
-          <div
-            style={{ right: '0px', zIndex: 2 }}
-            className="cursor-pointer fixed text-xl p-4 pt-7 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
-          >
-            <RxHamburgerMenu onClick={() => setOpen(!open)} />
-          </div>
-        ) : (
-          <div
-            style={{ right: '0px', zIndex: 2 }}
-            className="cursor-pointer fixed text-xl p-4 pt-7 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
-          >
-            <RxCross1
-              onClick={() => {
-                setOpen(!open)
-              }}
-            />
-          </div>
-        )}
-      </>
+      <div
+        style={{ right: '0px', zIndex: 2 }}
+        className="cursor-pointer fixed text-xl p-4 pt-7 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
+      >
+        {children}
+      </div>
     )
   }
 
   return (
     <>
-      <MobileMenuBurger />
-      {open && <MobileNavbar />}
+      <MobileMenuBurger
+        children={
+          !open ? (
+            <RxHamburgerMenu
+              onClick={() => {
+                setOpen(!open)
+              }}
+            />
+          ) : (
+            <RxCross1
+              onClick={() => {
+                setOpen(!open)
+              }}
+            />
+          )
+        }
+      />
+      <MobileNavbar />
     </>
   )
 }
