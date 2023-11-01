@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx'
 import { items, mapUrls } from './Navbar'
 import Link from 'next/link'
+import { useDetectClickOutside } from './useDetectClickOutside'
 
 const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   return (
@@ -22,6 +23,7 @@ const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   )
 }
 export default function MobileNavbar() {
+  useDetectClickOutside(() => setOpen(false), ['menu'])
   const [open, setOpen] = useState(false)
 
   const MobileNavbar = () => {
@@ -29,8 +31,14 @@ export default function MobileNavbar() {
       <>
         {open && (
           <div
-            style={{ width: '50vw', height: '100vh', right: '0px' }}
-            className="absolute bg-blue border-l border-yellow shadow-lg"
+            id="menu"
+            style={{
+              width: '60vw',
+              height: '100vh',
+              right: '0px',
+              zIndex: '1',
+            }}
+            className="absolute bg-blue border-l border-yellow shadow-l"
           >
             <NavbarLinks setOpen={setOpen} />
           </div>
@@ -44,13 +52,16 @@ export default function MobileNavbar() {
       <>
         {!open ? (
           <div
-            style={{ right: '0px', zIndex: 1 }}
-            className="fixed z-1 text-xl"
+            style={{ right: '0px', zIndex: 2 }}
+            className="cursor-pointer fixed text-xl p-4 pt-7 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
           >
             <RxHamburgerMenu onClick={() => setOpen(!open)} />
           </div>
         ) : (
-          <div style={{ right: '0px', zIndex: 1 }} className="fixed text-xl">
+          <div
+            style={{ right: '0px', zIndex: 2 }}
+            className="cursor-pointer fixed text-xl p-4 pt-7 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
+          >
             <RxCross1
               onClick={() => {
                 setOpen(!open)

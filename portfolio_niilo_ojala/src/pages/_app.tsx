@@ -17,10 +17,11 @@ export default function App({ Component, pageProps }: AppProps) {
           padding: 0,
           margin: 0,
           width: '100vw',
-          maxHeight: '100vh',
+          maxHeight: '100dvh',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
+          overflow: 'hidden',
         }}
         className="bg-blue"
       >
