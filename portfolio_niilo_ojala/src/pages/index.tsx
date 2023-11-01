@@ -15,7 +15,7 @@ export default function Home() {
         width={width > 750 ? 400 : 200}
         height={width > 750 ? 800 : 200}
         src={width > 750 ? '/profilePic.jpg' : '/profilePicSmall.jpg'}
-        className="scale rounded-xl shadow-2xl bg-red shadow-slate-200 m-5 max-w-400"
+        className="scale rounded-xl shadow-2xl bg-red shadow-slate-200 m-5 max-w-400 mb-2"
       />
       <div className="m-5 text-center">
         <h1 className="scale text-red pb-5">About me</h1>
