@@ -52,12 +52,14 @@ export default function Skills() {
           {renderSkills(skills.right)}
         </div>
         <p className={`scale`}>
-          At Osuuspankki, I have learned how write clean and reusable code
+          At Osuuspankki, I've learned how to write clean and reusable code
         </p>
         <p className={`scale text-yellow pt-3 pb-3`}>
           ...and ofcourse how to solve a problem!
         </p>
-        <p className={`scale`}>Eager to apply these skills professionally.</p>
+        <p className={`scale`}>
+          I'm eager to apply these skills professionally.
+        </p>
       </div>
     </div>
   )

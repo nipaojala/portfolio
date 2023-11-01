@@ -28,8 +28,7 @@ export default function Home() {
         <br />
         <h2 className="scale max-w-[400px] text-center pb-5">
           I'm also pursuing a major in Web Technologies at Aalto University with
-          an expected graduation in summer 2024. In my free time, I enjoy
-          skateboarding and playing the piano. My focus is on contributing to
+          an expected graduation in summer 2024. My focus is on contributing to
           impactful web projects and continuously improving my skills in this
           dynamic field.
         </h2>
