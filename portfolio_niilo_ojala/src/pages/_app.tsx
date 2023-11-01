@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          overflow: 'hidden',
+          overflow: 'scroll',
         }}
         className="bg-blue"
       >

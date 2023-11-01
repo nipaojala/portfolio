@@ -46,8 +46,8 @@ export default function Skills() {
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen">
       <div className="flex flex-col justify-center items-center w-[50vw] text-center">
-        <h1 className="scale text-red pb-5">These i have used</h1>
-        <div className="flex flex-row pb-10">
+        <h1 className="scale text-red pb-3">These i have used</h1>
+        <div className="flex flex-row pb-3">
           {renderSkills(skills.left)}
           {renderSkills(skills.right)}
         </div>
@@ -56,7 +56,7 @@ export default function Skills() {
           code reusable and clean.
         </p>
         <p
-          className={`scale text-yellow text-[${
+          className={`pt-3 scale text-yellow text-[${
             width > 700 ? '25px' : '20px'
           }]`}
         >
