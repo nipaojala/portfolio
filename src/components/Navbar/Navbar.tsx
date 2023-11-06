@@ -3,7 +3,7 @@ import React from 'react'
 import useWindowSize from './useWindowSize'
 import MobileNavbar from './MobileNavBar'
 
-export const items = ['home', 'skills', 'own projects', 'contact']
+export const items = ['home', 'skills', 'own projects', 'contact', 'admin']
 
 export function mapUrls(url: string) {
   switch (url) {
@@ -15,6 +15,8 @@ export function mapUrls(url: string) {
       return url
     case 'own projects':
       return 'projects'
+    case 'admin':
+      return 'admin'
   }
 }
 

@@ -1,8 +1,30 @@
 import useWindowSize from '@/components/Navbar/useWindowSize'
-import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
+import prisma from '../../lib/prisma'
+import { Post } from '@prisma/client'
 
-export default function Home() {
+// export const getStaticProps: GetStaticProps = async () => {
+//   const feed = await prisma.post.findMany({
+//     where: { published: true },
+//     include: {
+//       author: {
+//         select: { name: true },
+//       },
+//     },
+//   })
+//   return {
+//     props: { feed },
+//     revalidate: 10,
+//   }
+// }
+
+type Props = {
+  feed: Post[]
+}
+
+export default function Home(props: Props) {
+  console.log(props)
   const { width } = useWindowSize()
   return (
     <div
