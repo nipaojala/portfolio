@@ -107,12 +107,10 @@ const Admin = () => {
       skills: [...postData.skills, skill],
     }))
   }
-  console.log(postData)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log('moimoimoi')
     try {
-      console.log(postData)
       await fetch('/api/user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

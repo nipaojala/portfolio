@@ -16,7 +16,7 @@ export function mapUrls(url: string) {
     case 'own projects':
       return 'projects'
     case 'admin':
-      return '/admin'
+      return '/api/auth/signin'
   }
 }
 
