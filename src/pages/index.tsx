@@ -1,31 +1,12 @@
 import useWindowSize from '@/components/Navbar/useWindowSize'
-import { GetStaticProps } from 'next'
+import { useUserContext } from '@/components/UserContext'
 import Image from 'next/image'
-import prisma from '../../lib/prisma'
-import { Post } from '@prisma/client'
 
-// export const getStaticProps: GetStaticProps = async () => {
-//   const feed = await prisma.post.findMany({
-//     where: { published: true },
-//     include: {
-//       author: {
-//         select: { name: true },
-//       },
-//     },
-//   })
-//   return {
-//     props: { feed },
-//     revalidate: 10,
-//   }
-// }
-
-type Props = {
-  feed: Post[]
-}
-
-export default function Home(props: Props) {
-  console.log(props)
+export default function Home() {
   const { width } = useWindowSize()
+  const {
+    user: { first, second, third },
+  } = useUserContext()
   return (
     <div
       className={`flex flex-${
@@ -42,21 +23,10 @@ export default function Home(props: Props) {
       />
       <div className="m-5 text-center">
         <h1 className="scale text-red pb-5">About me</h1>
-        <h2 className="scale max-w-[400px] text-center">
-          Hello, I'm a 26-year-old Full-Stack Developer currently employed at
-          Osuuspankki, a Finnish bank, where I've gathered six months of
-          professional experience in web development.
-        </h2>
+        <h2 className="scale max-w-[400px] text-center">{first}</h2>
         <br />
-        <h2 className="scale max-w-[400px] text-center pb-5">
-          I'm also pursuing a major in Web Technologies at Aalto University with
-          an expected graduation in summer 2024. My focus is on contributing to
-          impactful web projects and continuously improving my skills in this
-          dynamic field.
-        </h2>
-        <h2 className="scale max-w-[400px] text-center text-yellow">
-          In my leisure time, I enjoy skateboarding and playing the piano.
-        </h2>
+        <h2 className="scale max-w-[400px] text-center pb-5">{second}</h2>
+        <h2 className="scale max-w-[400px] text-center text-yellow">{third}</h2>
       </div>
     </div>
   )

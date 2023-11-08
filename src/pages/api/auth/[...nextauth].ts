@@ -4,11 +4,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import GitHubProvider from 'next-auth/providers/github'
 import prisma from '../../../../lib/prisma'
 
-interface User {
-  email?: string
-  // Add other properties as needed
-}
-
 const authHandler: NextApiHandler = (req, res) =>
   NextAuth(req, res, {
     providers: [
@@ -27,7 +22,7 @@ const authHandler: NextApiHandler = (req, res) =>
           // For example, set a custom property in the user object
           return true
         } else {
-          return '/unauthenticated'
+          return false
         }
       },
     },

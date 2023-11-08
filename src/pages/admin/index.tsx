@@ -1,214 +1,208 @@
-import React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { signOut, useSession } from 'next-auth/react'
+import React, { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import prisma from '../../../lib/prisma'
+import { GetStaticProps } from 'next'
+import { Post } from '@prisma/client'
+import Router from 'next/router'
+import { renderSkills } from '../skills'
+import useWindowSize from '@/components/Navbar/useWindowSize'
+import { SingleImageDropzoneUsage } from '@/components/FileUpload'
+import { PostData } from '@/types'
+import { useUserContext } from '@/components/UserContext'
 
-const Admin: React.FC = () => {
-  const router = useRouter()
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname
+// export const getStaticProps: GetStaticProps = async () => {
+//   try {
+//     const newPost = await prisma.post.create({
+//       data: {
+//         skills: skills,
+//         // Include other properties if needed
+//       },
+//     })
+//     console.log('Post created:', newPost)
+//     return {
+//       props: { newPost },
+//       revalidate: 10,
+//     }
+//   } catch (error) {
+//     console.error('Error creating post:', error)
+//     throw error
+//   }
+// }
 
+type Props = {
+  feed: Post
+}
+
+// async function createPostWithFirstProperty(skills: string[]) {
+//   try {
+//     const newPost = await prisma.post.create({
+//       data: {
+//         skills: skills,
+//         // Include other properties if needed
+//       },
+//     })
+//     console.log('Post created:', newPost)
+//     return newPost
+//   } catch (error) {
+//     console.error('Error creating post:', error)
+//     throw error
+//   }
+// }
+
+const formFields = [
+  { name: 'first', label: 'First' },
+  { name: 'second', label: 'Second' },
+  { name: 'third', label: 'Third' },
+  { name: 'skills', label: 'Skills' },
+  { name: 'imageText', label: 'Image Text' },
+  { name: 'imageUrl', label: 'Image URL' },
+]
+
+const content = (status: 'authenticated' | 'loading' | 'unauthenticated') => {
+  if (status === 'loading')
+    return (
+      <div
+        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+        role="status"
+      >
+        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+          Loading...
+        </span>
+      </div>
+    )
+  if (status === 'unauthenticated') return <div>{status}</div>
+}
+
+const Admin = () => {
+  const {
+    user: { first, second, third, skills, imageText },
+  } = useUserContext()
+  const { width } = useWindowSize()
   const { data: session, status } = useSession()
+  const [skill, setSkill] = useState('')
+  const [dataFromDB, setDataFromDB] = useState<PostData>()
+  const [postData, setPostData] = useState<PostData>({
+    first: first,
+    second: second,
+    third: third,
+    skills: skills,
+    imageText: [],
+    imageUrl: [],
+  })
 
-  let left = (
-    <div className="left">
-      <Link href="/">
-        moi
-        {/* <a className="bold" data-active={isActive('/')}>
-          Feed
-        </a> */}
-      </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
 
-        a {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-        }
-
-        .left a[data-active='true'] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  )
-
-  let right = null
-
-  if (status === 'loading') {
-    left = (
-      <div className="left">
-        <Link href="/">
-          left
-          {/* <a className="bold" data-active={isActive('/')}>
-            Feed
-          </a> */}
-        </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active='true'] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    )
-    right = (
-      <div className="right">
-        <p>Validating session ...</p>
-        <style jsx>{`
-          .right {
-            margin-left: auto;
-          }
-        `}</style>
-      </div>
-    )
+    setPostData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
   }
+  const handleSkillChange = (e: React.MouseEvent) => {
+    e.preventDefault()
 
-  if (!session) {
-    right = (
-      <div className="right">
-        <Link href="/api/auth/signin">
-          {/* <a data-active={isActive('/signup')}>Log in</a> */}
-          right
-        </Link>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style>
-      </div>
-    )
+    setPostData((prevData) => ({
+      ...prevData,
+      skills: [...postData.skills, skill],
+    }))
   }
-
-  if (session) {
-    left = (
-      <div className="left">
-        <Link href="/">
-          {/* <a className="bold" data-active={isActive('/')}> */}
-          Feed
-          {/* </a> */}
-        </Link>
-        <Link href="/drafts">
-          <a data-active={isActive('/drafts')}>My drafts</a>
-        </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active='true'] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    )
-    right = (
-      <div className="right">
-        <p>
-          {session.user?.name} ({session.user?.email})
-        </p>
-        <Link href="/create">
-          <button>
-            newPOst
-            {/* <a>New post</a> */}
-          </button>
-        </Link>
-        <button onClick={() => signOut()}>
-          <a>Log out</a>
-        </button>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style>
-      </div>
-    )
+  console.log(postData)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('moimoimoi')
+    try {
+      console.log(postData)
+      await fetch('/api/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData),
+      })
+      await Router.push('/admin')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
-    <nav>
-      {left}
-      {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
-    </nav>
+    <div
+      style={{ justifyContent: 'flex-start' }}
+      className="flex flex-col flex-start justify-center items-center w-screen h-screen"
+    >
+      {status === 'authenticated' && session.user ? (
+        <>
+          <form onSubmit={handleSubmit}>
+            {formFields.map((field) => (
+              <>
+                {field.name !== 'skills' ? (
+                  <label
+                    key={field.name}
+                    className="scale block mb-2 mb-[50px] mt-[50px] flex flex-col text-center "
+                  >
+                    <p key={field.label} className="text-yellow font-bold p-2">
+                      {field.label}
+                    </p>
+                    {/* <textarea
+                    key={field.name}
+                    className="p-1 scale rounded-xl text-black h-[250px] w-[300px] font-roboto"
+                  > */}
+                    <input
+                      key={field.name}
+                      className="scale border p-2 text-black"
+                      type="text"
+                      name={field.name}
+                      value={postData[field.name]}
+                      onChange={(e) => {
+                        handleChange(e)
+                      }}
+                    />
+                    {/* </textarea> */}
+                  </label>
+                ) : (
+                  <>
+                    <label className="scale block mb-[50px] mt-[50px] flex flex-col text-center ">
+                      <input
+                        className="scale rounded-xl p-4 text-black"
+                        type="text"
+                        name="skills"
+                        value={skill}
+                        onChange={(e) => {
+                          e.preventDefault()
+                          setSkill(e.target.value)
+                        }}
+                      />
+                    </label>
+                    <button
+                      className="scale rounded-xl p-4 m-2 text-black bg-red"
+                      onClick={handleSkillChange}
+                    >
+                      submit skill
+                    </button>
+                  </>
+                )}
+              </>
+            ))}
+          </form>
+
+          <br />
+
+          <SingleImageDropzoneUsage />
+
+          <button
+            onClick={handleSubmit}
+            className="scale rounded-xl p-4 m-2 text-black bg-yellow"
+            type="submit"
+          >
+            Submit
+          </button>
+          <div className="pb-5 text-center">
+            Skills: <br />
+            {renderSkills(dataFromDB?.skills, width)}
+          </div>
+        </>
+      ) : (
+        <>{content(status)}</>
+      )}
+    </div>
   )
 }
 

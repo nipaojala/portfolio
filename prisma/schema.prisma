@@ -54,6 +54,12 @@ model User {
   email         String?@unique
   emailVerified DateTime?
   image         String?
+  first     String?
+  second    String?
+  third     String?
+  skills    String[]
+  imageText String[]
+  imageUrl  String[]
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
