@@ -118,7 +118,7 @@ const Admin = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData),
       })
-      router.push('/')
+      router.push('/admin')
     } catch (error) {
       console.error(error)
     }
