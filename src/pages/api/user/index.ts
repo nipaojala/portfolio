@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../../lib/prisma'
-import { fullData } from '@/fixtures'
 
 // POST /api/post
 
