@@ -30,7 +30,7 @@ export default async function handle(
   console.log(req.method)
   if (req.method === 'GET') {
     // return await getTextInfo(res)
-    return fullData
+    return res.json(fullData)
   } else if (req.method === 'POST') {
     return await updateTextInfo(req, res)
   } else {
