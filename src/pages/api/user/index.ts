@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../../lib/prisma'
+import { fullData } from '@/fixtures'
 
 // POST /api/post
 
@@ -28,7 +29,8 @@ export default async function handle(
 ) {
   console.log(req.method)
   if (req.method === 'GET') {
-    return await getTextInfo(res)
+    // return await getTextInfo(res)
+    return fullData
   } else if (req.method === 'POST') {
     return await updateTextInfo(req, res)
   } else {
