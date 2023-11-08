@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import prisma from '../../../lib/prisma'
 import { GetStaticProps } from 'next'
 import { Post } from '@prisma/client'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { renderSkills } from '../skills'
 import useWindowSize from '@/components/Navbar/useWindowSize'
 import { SingleImageDropzoneUsage } from '@/components/FileUpload'
@@ -74,6 +74,7 @@ const content = (status: 'authenticated' | 'loading' | 'unauthenticated') => {
 }
 
 const Admin = () => {
+  const router = useRouter()
   const {
     user: { first, second, third, skills, imageText },
   } = useUserContext()
@@ -117,7 +118,7 @@ const Admin = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData),
       })
-      await Router.push('/admin')
+      router.push('/')
     } catch (error) {
       console.error(error)
     }
