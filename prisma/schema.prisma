@@ -53,13 +53,11 @@ model User {
   name          String?
   email         String?@unique
   emailVerified DateTime?
-  image         String?
   first     String?
   second    String?
   third     String?
   skills    String[]
-  imageText String[]
-  imageUrl  String[]
+  image     Json[]
   posts         Post[]
   accounts      Account[]
   sessions      Session[]

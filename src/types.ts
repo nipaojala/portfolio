@@ -3,7 +3,12 @@ export interface PostData {
   second: string
   third: string
   skills: string[]
-  imageText: string[]
-  imageUrl: string[]
-  [key: string]: string | string[] | undefined // Index signature
+  images: ProjectInfo[]
+  [key: string]: string | string[] | ProjectInfo[] | undefined // Index signature
+}
+
+export interface ProjectInfo {
+  imageUrl: string
+  imageText: string
+  projectLink: string
 }

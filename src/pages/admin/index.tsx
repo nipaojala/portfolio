@@ -7,47 +7,8 @@ import Router, { useRouter } from 'next/router'
 import { renderSkills } from '../skills'
 import useWindowSize from '@/components/Navbar/useWindowSize'
 import { SingleImageDropzoneUsage } from '@/components/FileUpload'
-import { PostData } from '@/types'
+import { PostData, ProjectInfo } from '@/types'
 import { useUserContext } from '@/components/UserContext'
-
-// export const getStaticProps: GetStaticProps = async () => {
-//   try {
-//     const newPost = await prisma.post.create({
-//       data: {
-//         skills: skills,
-//         // Include other properties if needed
-//       },
-//     })
-//     console.log('Post created:', newPost)
-//     return {
-//       props: { newPost },
-//       revalidate: 10,
-//     }
-//   } catch (error) {
-//     console.error('Error creating post:', error)
-//     throw error
-//   }
-// }
-
-type Props = {
-  feed: Post
-}
-
-// async function createPostWithFirstProperty(skills: string[]) {
-//   try {
-//     const newPost = await prisma.post.create({
-//       data: {
-//         skills: skills,
-//         // Include other properties if needed
-//       },
-//     })
-//     console.log('Post created:', newPost)
-//     return newPost
-//   } catch (error) {
-//     console.error('Error creating post:', error)
-//     throw error
-//   }
-// }
 
 const formFields = [
   { name: 'first', label: 'First' },
@@ -76,22 +37,26 @@ const content = (status: 'authenticated' | 'loading' | 'unauthenticated') => {
 const Admin = () => {
   const router = useRouter()
   const {
-    user: { first, second, third, skills, imageText },
+    user: { first, second, third, skills, images },
   } = useUserContext()
+  useEffect(() => {
+    setPostData({ first, second, third, skills, images })
+  }, [first, second, third, skills])
+
   const { width } = useWindowSize()
   const { data: session, status } = useSession()
   const [skill, setSkill] = useState('')
-  const [dataFromDB, setDataFromDB] = useState<PostData>()
-  const [postData, setPostData] = useState<PostData>({
+  const [dataFromDB, setDataFromDB] = useState<Partial<PostData>>()
+  const [projectsInfo, setProjectsInfo] = useState<ProjectInfo[]>([])
+  const [postData, setPostData] = useState<Partial<PostData>>({
     first: first,
     second: second,
     third: third,
     skills: skills,
-    imageText: [],
-    imageUrl: [],
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(dataFromDB)
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target
 
     setPostData((prevData) => ({
@@ -109,7 +74,6 @@ const Admin = () => {
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('moimoimoi')
     try {
       await fetch('/api/user', {
         method: 'POST',
@@ -140,21 +104,25 @@ const Admin = () => {
                     <p key={field.label} className="text-yellow font-bold p-2">
                       {field.label}
                     </p>
-                    {/* <textarea
-                    key={field.name}
-                    className="p-1 scale rounded-xl text-black h-[250px] w-[300px] font-roboto"
-                  > */}
-                    <input
+                    <textarea
                       key={field.name}
-                      className="scale border p-2 text-black"
-                      type="text"
                       name={field.name}
                       value={postData[field.name]}
                       onChange={(e) => {
                         handleChange(e)
                       }}
+                      className="p-1 scale rounded-xl text-black h-[250px] w-[300px] font-roboto"
                     />
-                    {/* </textarea> */}
+                    {/* <input
+                        key={field.name}
+                        className="scale border p-2 text-black"
+                        type="text"
+                        name={field.name}
+                        value={postData[field.name]}
+                        onChange={(e) => {
+                          handleChange(e)
+                        }}
+                      /> */}
                   </label>
                 ) : (
                   <>
