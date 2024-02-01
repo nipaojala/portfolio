@@ -1,12 +1,9 @@
 import useWindowSize from '@/components/Navbar/useWindowSize'
-import { useUserContext } from '@/components/UserContext'
+import Head from 'next/head'
 import Image from 'next/image'
 
 export default function Home() {
   const { width } = useWindowSize()
-  const {
-    user: { first, second, third },
-  } = useUserContext()
   return (
     <div
       className={`flex flex-${
@@ -23,10 +20,21 @@ export default function Home() {
       />
       <div className="m-5 text-center">
         <h1 className="scale text-red pb-5">About me</h1>
-        <h2 className="scale max-w-[400px] text-center">{first}</h2>
+        <h2 className="scale max-w-[400px] text-center">
+          Hello, I'm a 26-year-old Full-Stack Developer currently employed at
+          Osuuspankki, a Finnish bank, where I've gathered a year of
+          professional experience in web development.
+        </h2>
         <br />
-        <h2 className="scale max-w-[400px] text-center pb-5">{second}</h2>
-        <h2 className="scale max-w-[400px] text-center text-yellow">{third}</h2>
+        <h2 className="scale max-w-[400px] text-center pb-5">
+          I'm also pursuing a major in Web Technologies at Aalto University with
+          an expected graduation in summer 2024. My focus is on contributing to
+          impactful web projects and continuously improving my skills in this
+          dynamic field.
+        </h2>
+        <h2 className="scale max-w-[400px] text-center text-yellow">
+          In my leisure time, I enjoy skateboarding and playing the piano.
+        </h2>
       </div>
     </div>
   )
