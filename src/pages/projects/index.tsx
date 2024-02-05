@@ -6,7 +6,7 @@ const projects = [
   {
     alt: 'kartat',
     src: '/kartat.png',
-    url: 'https://appro-app-production.up.railway.app/',
+    url: 'https://www.approkartat.fi/',
     title:
       'Next Js app with T3-stack. App for student appros. Have done 90% of frontend so far.',
   },
