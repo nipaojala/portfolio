@@ -1,3 +1,4 @@
+import { useMobileBarOpenContext } from '@/components/Navbar/useMobileBarOpenContext'
 import useWindowSize from '@/components/Navbar/useWindowSize'
 import Image from 'next/image'
 import React from 'react'
@@ -32,20 +33,27 @@ const Card: React.FC<{
   src: string
   width: number
 }> = ({ title, url, alt, src, width }) => {
+  const { isMobilebarOpen } = useMobileBarOpenContext()
   return (
-    <div className="max-w-[600px] text-center flex flex-col items-center justify-center ml-3 mr-3">
+    <div
+      style={{
+        boxShadow: '0 10px 15px 5px rgba(0,0,0,0.5)',
+        transition: '0.3s',
+      }}
+      className="rounded-xl max-w-[600px] text-center flex flex-col items-center justify-center ml-3 mr-3 mb-10"
+    >
       <button
-        className="flex justify-center hover:opacity-50"
-        onClick={() =>
-          window.open('https://appro-app-production.up.railway.app/')
-        }
+        className={`flex justify-center hover:opacity-50 ${
+          isMobilebarOpen && 'cursor-default'
+        }`}
+        onClick={() => !isMobilebarOpen && window.open(url)}
       >
         <Image
           alt={alt}
           width={width > 750 ? 600 : 300}
           height={width > 750 ? 600 : 300}
           src={src}
-          className="scale rounded-xl shadow-md shadow-slate-200 m-5 max-w-400"
+          className="scale rounded-xl shadow-md shadow-slate-200 m-5 max-w-200"
         />
       </button>
       <p className="scale p-5">{title}</p>
@@ -60,7 +68,6 @@ export default function Projects() {
   const { width } = useWindowSize()
   return (
     <div
-      style={{ height: '100%' }}
       className={`flex flex-col align-center oveflow-scroll justify-center items-center w-screen pt-20`}
     >
       {projects.map((project) => {

@@ -30,26 +30,26 @@ export default function App({ Component, pageProps }: AppProps) {
         value={{ isMobilebarOpen, setisMobileBarOpen }}
       >
         <Navbar />
+        <div
+          style={{
+            padding: 0,
+            margin: 0,
+            width: '100vw',
+            height: '100dvh',
+            display: 'flex',
+            opacity: isMobilebarOpen ? '50%' : '100%',
+            flexDirection: 'column',
+            position: 'relative',
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+          }}
+          className="bg-blue"
+        >
+          <MyFirstRenderContext.Provider value={{ isFirstRender }}>
+            <Component {...pageProps} />
+          </MyFirstRenderContext.Provider>
+        </div>
       </MyMobileBarContext.Provider>
-      <div
-        style={{
-          padding: 0,
-          margin: 0,
-          width: '100dvw',
-          height: '100dvh',
-          display: 'flex',
-          opacity: isMobilebarOpen ? '50%' : '100%',
-          flexDirection: 'column',
-          position: 'relative',
-          overflowY: 'scroll',
-          overflowX: 'hidden',
-        }}
-        className="bg-blue"
-      >
-        <MyFirstRenderContext.Provider value={{ isFirstRender }}>
-          <Component {...pageProps} />
-        </MyFirstRenderContext.Provider>
-      </div>
     </>
   )
 }

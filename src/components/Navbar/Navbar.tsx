@@ -27,7 +27,7 @@ const Navbar = () => {
         <>
           <div
             style={{ height: 'auto' }}
-            className="relative t-0 w-screen border-b flex justify-center align-center items-center drop-shadow-lg"
+            className="relative t-0 w-screen border-b flex justify-center align-center items-center drop-shadow-lg bg-blue"
           >
             <ul className="flex flex-row">
               {items.map((item) => (
