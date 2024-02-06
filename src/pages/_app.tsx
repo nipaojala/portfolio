@@ -35,8 +35,8 @@ export default function App({ Component, pageProps }: AppProps) {
         style={{
           padding: 0,
           margin: 0,
-          width: '100vw',
-          maxHeight: '100dvh',
+          width: '100dvw',
+          height: '100dvh',
           display: 'flex',
           opacity: isMobilebarOpen ? '50%' : '100%',
           flexDirection: 'column',
