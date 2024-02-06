@@ -1,7 +1,8 @@
 import { useMobileBarOpenContext } from '@/components/Navbar/useMobileBarOpenContext'
 import useWindowSize from '@/components/Navbar/useWindowSize'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { RxArrowDown, RxArrowUp } from 'react-icons/rx'
 
 const projects = [
   {
@@ -38,9 +39,10 @@ const Card: React.FC<{
     <div
       style={{
         boxShadow: '0 10px 15px 5px rgba(0,0,0,0.5)',
-        transition: '0.3s',
+        minHeight: '100vh',
+        scrollSnapAlign: 'start',
       }}
-      className="rounded-xl max-w-[600px] text-center flex flex-col items-center justify-center ml-3 mr-3 mb-10"
+      className="rounded-xl text-center flex flex-col justify-center"
     >
       <button
         className={`flex justify-center hover:opacity-50 ${
@@ -66,23 +68,80 @@ const Card: React.FC<{
 
 export default function Projects() {
   const { width } = useWindowSize()
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const [lastSlide, setLastSlide] = useState(false)
+  const [firstSlide, setFirstSlide] = useState(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = containerRef.current
+      if (container) {
+        Math.abs(
+          container.scrollHeight - container.clientHeight - container.scrollTop
+        ) < 600
+          ? setLastSlide(true)
+          : setLastSlide(false)
+
+        container.scrollTop < 600 ? setFirstSlide(true) : setFirstSlide(false)
+      }
+    }
+
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener('scroll', handleScroll)
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [])
   return (
-    <div
-      className={`flex flex-col align-center oveflow-scroll justify-center items-center w-screen pt-20`}
-    >
-      {projects.map((project) => {
-        const { alt, src, url, title } = project
-        return (
-          <Card
-            key={alt}
-            src={src}
-            alt={alt}
-            url={url}
-            width={width}
-            title={title}
-          />
-        )
-      })}
-    </div>
+    <>
+      <div
+        style={{
+          opacity: firstSlide ? '0%' : '100%',
+          top: width > 700 ? '120px' : '20px',
+          transition: 'opacity 0.2s ease',
+        }}
+        className={`animate-bounce text-[33px] opacity-90 fixed pl-3`}
+      >
+        <RxArrowUp />
+      </div>
+      <div
+        style={{
+          bottom: '20px',
+          opacity: lastSlide ? '0%' : '100%',
+          transition: 'opacity 0.2s ease',
+        }}
+        className="animate-bounce text-[33px] opacity-90 fixed pl-3"
+      >
+        <RxArrowDown />
+      </div>
+      <div
+        ref={containerRef}
+        style={{
+          scrollSnapType: 'y mandatory',
+          overflow: 'scroll',
+          height: '100%',
+        }}
+        className={`flex flex-col`}
+      >
+        {projects.map((project) => {
+          const { alt, src, url, title } = project
+          return (
+            <Card
+              key={alt}
+              src={src}
+              alt={alt}
+              url={url}
+              width={width}
+              title={title}
+            />
+          )
+        })}
+      </div>
+    </>
   )
 }
