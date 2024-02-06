@@ -26,7 +26,7 @@ export const Navbar = () => {
       {width > 1200 ? (
         <>
           <div
-            style={{ height: 'auto' }}
+            style={{ width: 'auto' }}
             className="relative t-0 w-screen border-b flex justify-center align-center items-center drop-shadow-lg"
           >
             <ul className="flex flex-row">

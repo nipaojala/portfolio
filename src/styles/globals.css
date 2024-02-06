@@ -57,6 +57,10 @@
   animation: scaleAnimation 0.1s ease-out;
 }
 
+.firstRenderScale {
+  animation: scaleAnimation 1s ease-out;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

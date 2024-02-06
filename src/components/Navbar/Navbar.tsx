@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import useWindowSize from './useWindowSize'
 import MobileNavbar from './MobileNavBar'
 
@@ -18,7 +18,7 @@ export function mapUrls(url: string) {
   }
 }
 
-export const Navbar = () => {
+const Navbar = () => {
   const { width } = useWindowSize()
 
   return (
@@ -48,3 +48,5 @@ export const Navbar = () => {
     </>
   )
 }
+
+export default Navbar

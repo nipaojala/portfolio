@@ -4,6 +4,7 @@ import { items, mapUrls } from './Navbar'
 import Link from 'next/link'
 import { useDetectClickOutside } from './useDetectClickOutside'
 import { motion } from 'framer-motion'
+import useWindowSize from './useWindowSize'
 const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   return (
     <div className="relative t-0 flex justify-center items-center align-center items-center">
@@ -25,28 +26,39 @@ const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
 export default function MobileNavbar() {
   useDetectClickOutside(() => setOpen(false), ['menu'])
   const [open, setOpen] = useState(false)
+  const { width } = useWindowSize()
 
   const MobileNavbar = () => {
     return (
       <>
-        {open && (
-          <motion.div
-            id="menu"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-            style={{
-              width: '60vw',
-              height: '100vh',
-              right: 0,
-              zIndex: 1,
-            }}
-            className="absolute bg-blue border-l border-yellow shadow-l"
-          >
-            <NavbarLinks setOpen={setOpen} />
-          </motion.div>
-        )}
+        <button
+          className="bg-black p-10"
+          onClick={(e) => {
+            e.preventDefault()
+            setOpen((prev) => !prev)
+          }}
+        >
+          Click me
+        </button>
+        <div
+          className={`${open ? 'border-l' : ''} border-yellow shadow-l ${
+            open ? 'border-b' : ''
+          } rounded border-gray absolute`}
+          style={{
+            height: '100%',
+            right: 0,
+            display: 'grid',
+            gridTemplateColumns: open ? '1fr' : '0fr',
+            overflow: 'hidden',
+            transition: 'grid-template-columns 200ms',
+          }}
+        >
+          <div className={`min-w-0`}>
+            <div style={{ padding: `${width / 10}px` }}>
+              <NavbarLinks setOpen={setOpen} />
+            </div>
+          </div>
+        </div>
       </>
     )
   }

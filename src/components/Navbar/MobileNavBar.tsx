@@ -1,55 +1,35 @@
-import React, { useState } from 'react'
-import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx'
-import { items, mapUrls } from './Navbar'
-import Link from 'next/link'
+import useWindowSize from '@/components/Navbar/useWindowSize'
+import React, { Dispatch, SetStateAction, useContext } from 'react'
+import { RxCross1, RxHamburgerMenu } from 'react-icons/rx'
 import { useDetectClickOutside } from './useDetectClickOutside'
-import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { items, mapUrls } from './Navbar'
+import { useMobileBarOpenContext } from './useMobileBarOpenContext'
+
 const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   return (
     <div className="relative t-0 flex justify-center items-center align-center items-center">
       <ul className="flex flex-col text-center">
         {items.map((item) => (
           <Link
+            style={{ whiteSpace: 'pre-line' }}
             href={`${mapUrls(item)}`}
             onClick={() => setOpen(false)}
             key={item}
-            className="rounded p-5 text-[30px] text-yellow font-semibold hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
+            className="rounded p-5 text-break text-[30px] text-yellow font-semibold hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 transition-transform transform active:scale-95"
           >
-            {item}
+            {item.split(' ').join('\n')}
           </Link>
         ))}
       </ul>
     </div>
   )
 }
-export default function MobileNavbar() {
-  useDetectClickOutside(() => setOpen(false), ['menu'])
-  const [open, setOpen] = useState(false)
 
-  const MobileNavbar = () => {
-    return (
-      <>
-        {open && (
-          <motion.div
-            id="menu"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-            style={{
-              width: '60vw',
-              height: '100vh',
-              right: 0,
-              zIndex: 1,
-            }}
-            className="absolute bg-blue border-l border-yellow shadow-l"
-          >
-            <NavbarLinks setOpen={setOpen} />
-          </motion.div>
-        )}
-      </>
-    )
-  }
+const MobileNavBar = () => {
+  const { width } = useWindowSize()
+  const { isMobilebarOpen, setisMobileBarOpen } = useMobileBarOpenContext()
+  useDetectClickOutside(() => setisMobileBarOpen(false), ['menu'])
 
   const MobileMenuBurger = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -61,27 +41,58 @@ export default function MobileNavbar() {
       </div>
     )
   }
-
   return (
     <>
       <MobileMenuBurger
         children={
-          !open ? (
-            <RxHamburgerMenu
-              onClick={() => {
-                setOpen(!open)
-              }}
-            />
+          !isMobilebarOpen ? (
+            <div className="scale">
+              <RxHamburgerMenu
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  e.preventDefault()
+                  setisMobileBarOpen((prev) => !prev)
+                }}
+              />
+            </div>
           ) : (
-            <RxCross1
-              onClick={() => {
-                setOpen(!open)
-              }}
-            />
+            <div className="scale">
+              <RxCross1
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  e.preventDefault()
+                  setisMobileBarOpen((prev) => !prev)
+                }}
+              />
+            </div>
           )
         }
       />
-      <MobileNavbar />
+      <div
+        id="menu"
+        className={`bg-blue border-yellow shadow-l ${
+          isMobilebarOpen ? 'border-b' : ''
+        } rounded border-gray absolute`}
+        style={{
+          height: '100%',
+          right: 0,
+          zIndex: 1,
+          display: 'grid',
+          gridTemplateColumns: isMobilebarOpen ? '1fr' : '0fr',
+          overflow: 'hidden',
+          transition: 'grid-template-columns 200ms',
+        }}
+      >
+        <div className={`min-w-0`}>
+          <div style={{ padding: `${width / 10}px` }}>
+            <NavbarLinks setOpen={setisMobileBarOpen} />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
+
+export default MobileNavBar
