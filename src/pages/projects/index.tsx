@@ -33,7 +33,9 @@ const Card: React.FC<{
   alt: string
   src: string
   width: number
-}> = ({ title, url, alt, src, width }) => {
+  lastSlide: boolean
+  firstSlide: boolean
+}> = ({ title, url, alt, src, width, firstSlide, lastSlide }) => {
   const { isMobilebarOpen } = useMobileBarOpenContext()
   return (
     <div
@@ -42,26 +44,48 @@ const Card: React.FC<{
         minHeight: '100vh',
         scrollSnapAlign: 'start',
       }}
-      className="rounded-xl text-center flex flex-col justify-center"
+      className="rounded-xl text-center flex flex-col justify-between"
     >
-      <button
-        className={`flex justify-center hover:opacity-50 ${
-          isMobilebarOpen && 'cursor-default'
-        }`}
-        onClick={() => !isMobilebarOpen && window.open(url)}
+      <div
+        style={{
+          opacity: firstSlide ? '0%' : '100%',
+          top: width > 700 ? '120px' : '20px',
+          transition: 'opacity 0.2s ease',
+        }}
+        className={`animate-bounce text-[33px] opacity-90 relative pl-3`}
       >
-        <Image
-          alt={alt}
-          width={width > 750 ? 600 : 300}
-          height={width > 750 ? 600 : 300}
-          src={src}
-          className="scale rounded-xl shadow-md shadow-slate-200 m-5 max-w-200"
-        />
-      </button>
-      <p className="scale p-5">{title}</p>
-      <a href={url}>
-        <p className="scale p-5 pt-1 hover:text-red text-yellow">{url}</p>
-      </a>
+        <RxArrowUp />
+      </div>
+      <div>
+        <button
+          className={`flex justify-center hover:opacity-50 ${
+            isMobilebarOpen && 'cursor-default'
+          }`}
+          onClick={() => !isMobilebarOpen && window.open(url)}
+        >
+          <Image
+            alt={alt}
+            width={width > 750 ? 600 : 300}
+            height={width > 750 ? 600 : 300}
+            src={src}
+            className="scale rounded-xl shadow-md shadow-slate-200 m-5 max-w-200"
+          />
+        </button>
+        <p className="scale p-5">{title}</p>
+        <a href={url}>
+          <p className="scale p-5 pt-1 hover:text-red text-yellow">{url}</p>
+        </a>
+      </div>
+      <div
+        style={{
+          bottom: '20px',
+          opacity: lastSlide ? '0%' : '100%',
+          transition: 'opacity 0.2s ease',
+        }}
+        className="animate-bounce text-[33px] opacity-90 relative pl-3"
+      >
+        <RxArrowDown />
+      </div>
     </div>
   )
 }
@@ -100,26 +124,6 @@ export default function Projects() {
   return (
     <>
       <div
-        style={{
-          opacity: firstSlide ? '0%' : '100%',
-          top: width > 700 ? '120px' : '20px',
-          transition: 'opacity 0.2s ease',
-        }}
-        className={`animate-bounce text-[33px] opacity-90 fixed pl-3`}
-      >
-        <RxArrowUp />
-      </div>
-      <div
-        style={{
-          bottom: '20px',
-          opacity: lastSlide ? '0%' : '100%',
-          transition: 'opacity 0.2s ease',
-        }}
-        className="animate-bounce text-[33px] opacity-90 fixed pl-3"
-      >
-        <RxArrowDown />
-      </div>
-      <div
         ref={containerRef}
         style={{
           scrollSnapType: 'y mandatory',
@@ -132,6 +136,8 @@ export default function Projects() {
           const { alt, src, url, title } = project
           return (
             <Card
+              lastSlide={lastSlide}
+              firstSlide={firstSlide}
               key={alt}
               src={src}
               alt={alt}
