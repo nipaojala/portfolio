@@ -160,7 +160,7 @@ export default function Projects() {
               url={url}
               width={width}
               title={title}
-              minHeight={index === 0 ? '95dvh' : undefined}
+              minHeight={index === 0 ? '90dvh' : undefined}
             />
           )
         })}
