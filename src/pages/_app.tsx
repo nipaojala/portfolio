@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
         margin: 0,
         flexGrow: 1,
         display: 'flex',
-        minHeight: '100dvh',
+        maxHeight: '100dvh',
         flexDirection: 'column',
         position: 'relative',
       }}
