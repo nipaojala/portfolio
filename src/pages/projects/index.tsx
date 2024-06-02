@@ -35,14 +35,24 @@ const Card: React.FC<{
   width: number
   lastSlide: boolean
   firstSlide: boolean
-}> = ({ title, url, alt, src, width, firstSlide, lastSlide }) => {
+  minHeight?: string
+}> = ({
+  title,
+  url,
+  alt,
+  src,
+  width,
+  firstSlide,
+  lastSlide,
+  minHeight = '100dvh',
+}) => {
   const { isMobilebarOpen } = useMobileBarOpenContext()
   const { width: screenWidth } = useWindowSize()
   return (
     <div
       style={{
         boxShadow: '0 10px 15px 5px rgba(0,0,0,0.5)',
-        minHeight: '100vh',
+        minHeight: minHeight,
         scrollSnapAlign: 'start',
         justifyContent: screenWidth < 750 ? 'space-between' : 'center',
       }}
@@ -138,7 +148,7 @@ export default function Projects() {
         }}
         className={`flex flex-col`}
       >
-        {projects.map((project) => {
+        {projects.map((project, index) => {
           const { alt, src, url, title } = project
           return (
             <Card
@@ -150,6 +160,7 @@ export default function Projects() {
               url={url}
               width={width}
               title={title}
+              minHeight={index === 0 ? '95dvh' : undefined}
             />
           )
         })}
