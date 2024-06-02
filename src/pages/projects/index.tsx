@@ -37,26 +37,30 @@ const Card: React.FC<{
   firstSlide: boolean
 }> = ({ title, url, alt, src, width, firstSlide, lastSlide }) => {
   const { isMobilebarOpen } = useMobileBarOpenContext()
+  const { width: screenWidth } = useWindowSize()
   return (
     <div
       style={{
         boxShadow: '0 10px 15px 5px rgba(0,0,0,0.5)',
         minHeight: '100vh',
         scrollSnapAlign: 'start',
+        justifyContent: screenWidth < 750 ? 'space-between' : 'center',
       }}
-      className="rounded-xl text-center flex flex-col justify-between"
+      className="rounded-xl text-center flex flex-col"
     >
-      <div
-        style={{
-          opacity: firstSlide ? '0%' : '100%',
-          top: width > 700 ? '120px' : '20px',
-          transition: 'opacity 0.2s ease',
-        }}
-        className={`animate-bounce text-[33px] opacity-90 relative pl-3`}
-      >
-        <RxArrowUp />
-      </div>
-      <div>
+      {screenWidth < 750 && (
+        <div
+          style={{
+            opacity: firstSlide ? '0%' : '100%',
+            top: width > 700 ? '120px' : '20px',
+            transition: 'opacity 0.2s ease',
+          }}
+          className={`animate-bounce text-[33px] opacity-90 relative pl-3`}
+        >
+          <RxArrowUp />
+        </div>
+      )}
+      <div className="flex justify-center flex-col">
         <button
           className={`flex justify-center hover:opacity-50 ${
             isMobilebarOpen && 'cursor-default'
@@ -76,16 +80,18 @@ const Card: React.FC<{
           <p className="scale p-5 pt-1 hover:text-red text-yellow">{url}</p>
         </a>
       </div>
-      <div
-        style={{
-          bottom: '20px',
-          opacity: lastSlide ? '0%' : '100%',
-          transition: 'opacity 0.2s ease',
-        }}
-        className="animate-bounce text-[33px] opacity-90 relative pl-3"
-      >
-        <RxArrowDown />
-      </div>
+      {screenWidth < 750 && (
+        <div
+          style={{
+            bottom: '20px',
+            opacity: lastSlide ? '0%' : '100%',
+            transition: 'opacity 0.2s ease',
+          }}
+          className="animate-bounce text-[33px] opacity-90 relative pl-3"
+        >
+          <RxArrowDown />
+        </div>
+      )}
     </div>
   )
 }

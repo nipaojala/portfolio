@@ -19,7 +19,17 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [isFirstRender])
 
   return (
-    <>
+    <div
+      style={{
+        padding: 0,
+        margin: 0,
+        flexGrow: 1,
+        display: 'flex',
+        minHeight: '100dvh',
+        flexDirection: 'column',
+        position: 'relative',
+      }}
+    >
       <Head>
         <title>Niilo`s portfolio</title>
         <meta name="description" content="Niilo's portfolio page" />
@@ -41,7 +51,6 @@ export default function App({ Component, pageProps }: AppProps) {
             flexDirection: 'column',
             position: 'relative',
             overflowY: 'scroll',
-            overflowX: 'hidden',
           }}
           className="bg-blue"
         >
@@ -50,6 +59,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </MyFirstRenderContext.Provider>
         </div>
       </MyMobileBarContext.Provider>
-    </>
+    </div>
   )
 }
