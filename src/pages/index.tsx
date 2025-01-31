@@ -17,6 +17,8 @@ export default function Home() {
         height={width > 750 ? 650 : 180}
         src={width > 750 ? '/profilePic.jpg' : '/profilePicSmall.jpg'}
         className={`scale rounded-xl shadow-2xl bg-red shadow-slate-200 m-5 max-w-400 mb-2`}
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/axPR/0AAAAASUVORK5CYII="
       />
       <div className="m-5 text-center">
         <h1 className={`scale text-red pb-5`}>About me</h1>

@@ -50,6 +50,8 @@ const Card: React.FC<{
           height={width > 750 ? 600 : 300}
           src={src}
           className="scale rounded-xl shadow-md shadow-slate-200"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/axPR/0AAAAASUVORK5CYII="
         />
       </button>
       <p
