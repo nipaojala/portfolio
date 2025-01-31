@@ -23,11 +23,11 @@ export const Navbar = () => {
 
   return (
     <>
-      {width > 1200 ? (
+      {width > 900 ? (
         <>
           <div
             style={{ height: 'auto' }}
-            className="relative t-0 w-screen border-b flex justify-center align-center items-center drop-shadow-lg bg-blue"
+            className="fixed w-screen border-b flex justify-center align-center items-center drop-shadow-lg bg-blue"
           >
             <ul className="flex flex-row">
               {items.map((item) => (

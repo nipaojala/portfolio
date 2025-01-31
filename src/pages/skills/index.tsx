@@ -44,7 +44,10 @@ export default function Skills() {
     )
   }
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <div
+      className={`flex flex-col justify-center items-center w-screen`}
+      style={{ height: '100dvh' }}
+    >
       <div className="flex flex-col justify-center items-center w-[50vw] text-center">
         <h3 className={`scale text-red pb-3`}>These I have used</h3>
         <div className="flex flex-row pb-3">

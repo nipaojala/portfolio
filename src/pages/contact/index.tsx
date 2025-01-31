@@ -19,7 +19,10 @@ const Button: React.FC<{
 export default function Contact() {
   const { width } = useWindowSize()
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <div
+      className={`flex flex-col justify-center items-center w-screen`}
+      style={{ height: '100dvh' }}
+    >
       <h1 className="scale text-red p-10">Contact me!</h1>
       <div className={`flex flex-${width > 700 ? 'row' : 'col items-center'}`}>
         <Button url="https://www.linkedin.com/in/niilo-ojala-7ba5a3151/">

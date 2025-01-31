@@ -76,7 +76,9 @@ export default function Projects() {
 
   return (
     <>
-      <div className={`flex flex-col`}>
+      <div
+        className={`flex flex-col ${width > 700 ? 'pt-[100px]' : 'pt-[60px]'}`}
+      >
         {projects.map((project, index) => {
           const { alt, src, url, title } = project
           return (

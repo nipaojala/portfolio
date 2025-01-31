@@ -7,7 +7,8 @@ export default function Home() {
     <div
       className={`flex flex-${
         width > 700 ? 'row' : 'col'
-      } justify-center items-center h-screen`}
+      } justify-center items-center`}
+      style={{ height: '100dvh' }}
     >
       <Image
         style={{ transform: width > 750 ? 'scale(0.9)' : undefined }}
