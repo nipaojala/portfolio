@@ -1,5 +1,5 @@
-import useWindowSize from '@/components/Navbar/useWindowSize'
 import React from 'react'
+import useWindowSize from '../../components/utils/useWindowSize'
 const skills = {
   left: [
     'React',

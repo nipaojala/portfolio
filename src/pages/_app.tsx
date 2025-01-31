@@ -1,22 +1,12 @@
 import type { AppProps } from 'next/app'
-import '@/styles/globals.css'
+import '../styles/globals.css'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import Navbar from '@/components/Navbar/Navbar'
-import { MyMobileBarContext } from '@/components/Navbar/useMobileBarOpenContext'
-import { MyFirstRenderContext } from '@/components/Navbar/useFirstRender'
+import { useState } from 'react'
+import { Navbar } from '../components/Navbar/Navbar'
+import { MyMobileBarContext } from '../components/utils/useMobileBarOpenContext'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isMobilebarOpen, setisMobileBarOpen] = useState(false)
-  const [isFirstRender, setisFirstRender] = useState(true)
-
-  useEffect(() => {
-    if (isFirstRender) {
-      setTimeout(() => {
-        setisFirstRender(false)
-      }, 2000)
-    }
-  }, [isFirstRender])
 
   return (
     <div
@@ -54,9 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }}
           className="bg-blue"
         >
-          <MyFirstRenderContext.Provider value={{ isFirstRender }}>
-            <Component {...pageProps} />
-          </MyFirstRenderContext.Provider>
+          <Component {...pageProps} />
         </div>
       </MyMobileBarContext.Provider>
     </div>

@@ -1,10 +1,10 @@
-import useWindowSize from '@/components/Navbar/useWindowSize'
-import React, { Dispatch, SetStateAction, useContext } from 'react'
+import React from 'react'
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx'
-import { useDetectClickOutside } from './useDetectClickOutside'
+import { useDetectClickOutside } from '../utils/useDetectClickOutside'
 import Link from 'next/link'
 import { items, mapUrls } from './Navbar'
-import { useMobileBarOpenContext } from './useMobileBarOpenContext'
+import { useMobileBarOpenContext } from '../utils/useMobileBarOpenContext'
+import useWindowSize from '../utils/useWindowSize'
 
 const NavbarLinks = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   return (

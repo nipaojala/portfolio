@@ -1,6 +1,6 @@
-import useWindowSize from '@/components/Navbar/useWindowSize'
 import React from 'react'
 import { AiOutlineGithub, AiOutlineLinkedin } from 'react-icons/ai'
+import useWindowSize from '../../components/utils/useWindowSize'
 
 const Button: React.FC<{
   children: React.ReactNode

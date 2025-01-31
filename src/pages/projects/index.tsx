@@ -1,8 +1,8 @@
-import { useMobileBarOpenContext } from '@/components/Navbar/useMobileBarOpenContext'
-import useWindowSize from '@/components/Navbar/useWindowSize'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { RxArrowDown, RxArrowUp } from 'react-icons/rx'
+import useWindowSize from '../../components/utils/useWindowSize'
+import { useMobileBarOpenContext } from '../../components/utils/useMobileBarOpenContext'
 
 const projects = [
   {
